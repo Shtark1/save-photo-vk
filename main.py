@@ -13,7 +13,7 @@ def photo():
         "v": "5.131",
         "owner_id": id_profile,
         "album_id": "wall",
-        "count": "100",
+        "count": "5",
         "extended": "1"
     }
 
