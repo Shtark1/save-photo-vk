@@ -13,7 +13,7 @@ def photo():
         "v": "5.131",
         "owner_id": id_profile,
         "album_id": "wall",
-        "count": "100",
+        "count": "5",
         "extended": "1"
     }
 
@@ -47,7 +47,7 @@ def photo():
                             # Загрузка всех фото
     i = 0
     while i < len(name[0]):
-        print(f"\n\nИмя фотографии: {name[0][i]} \nРазмер фотографии: {size[0][i]} \nСсылка на фото: {url_photo[0][i]}")
+        print(f"\n\nЗАГРУЖЕНО ФОТО {i+1}/{len(name[0])}\nИмя фотографии: {name[0][i]} \nРазмер фотографии: {size[0][i]} \nСсылка на фото: {url_photo[0][i]}")
         y.upload_url({url_photo[0][i]}, f"{name_folder}/{name[0][i]}.jpg")  # Загрузка фото
 
         i += 1
