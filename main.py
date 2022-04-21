@@ -1,7 +1,7 @@
 import requests
 import yadisk
 import datetime
-
+from pprint import pprint
 
 def photo():
 
@@ -13,13 +13,13 @@ def photo():
         "v": "5.131",
         "owner_id": id_profile,
         "album_id": "wall",
-        "count": "5",
+        "count": col_photo,
         "extended": "1"
     }
 
     res = requests.get(URL, params=params).json()
     res1 = res['response']['items']
-
+    # pprint(res1)
 
         # Словари для записи Имен, Ссылки и Размера фото
     name = []
@@ -32,8 +32,6 @@ def photo():
     size.append([str(url["sizes"][-1]["type"]) for url in res1]) # из всего списка берём максимальный размер
 
     url_photo.append([str(url["sizes"][-1]["url"]) for url in res1]) # из всего списка берём URL фото
-
-
 
 
 
@@ -50,6 +48,12 @@ def photo():
         print(f"\n\nЗАГРУЖЕНО ФОТО {i+1}/{len(name[0])}\nИмя фотографии: {name[0][i]} \nРазмер фотографии: {size[0][i]} \nСсылка на фото: {url_photo[0][i]}")
         y.upload_url({url_photo[0][i]}, f"{name_folder}/{name[0][i]}.jpg")  # Загрузка фото
 
+        a = [{
+            "file_name": f"{name[0][i]}.jpg",
+            "size": f"{size[0][i]}"
+        }]
+        pprint(a)
+
         i += 1
 
 
@@ -60,4 +64,7 @@ if __name__ == "__main__":
     token = ""  # Token приложения вк
     id_profile = input("Введите Id пользователя: ")
     TOKEN_YA = input("Введите токен вашего YaDisk: ")
+    col_photo = int(input("Введите количество фото которое нужно сохранить: "))
     photo()
+
+
