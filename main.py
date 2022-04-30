@@ -1,7 +1,8 @@
 import requests
 import yadisk
 import datetime
-from pprint import pprint
+import json
+
 
 def photo():
 
@@ -19,7 +20,6 @@ def photo():
 
     res = requests.get(URL, params=params).json()
     res1 = res['response']['items']
-    # pprint(res1)
 
         # Словари для записи Имен, Ссылки и Размера фото
     name = []
@@ -42,23 +42,36 @@ def photo():
     y.mkdir(name_folder)  # Создание папки
 
 
+                          # Открытие json файла
+    def write(data, filename):
+        data = json.dumps(data)
+        data = json.loads(str(data))
+        with open(filename, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4)
+
+    jsFile = []
+
                             # Загрузка всех фото
     i = 0
     while i < len(name[0]):
         print(f"\n\nЗАГРУЖЕНО ФОТО {i+1}/{len(name[0])}\nИмя фотографии: {name[0][i]} \nРазмер фотографии: {size[0][i]} \nСсылка на фото: {url_photo[0][i]}")
         y.upload_url({url_photo[0][i]}, f"{name_folder}/{name[0][i]}.jpg")  # Загрузка фото
 
-        a = [{
-            "file_name": f"{name[0][i]}.jpg",
-            "size": f"{size[0][i]}"
+                    # Сохранение информации загруженных фото в json файле
+        n_data = [{
+            "file_name": f"{name[-1][i]}.jpg",
+            "size": f"{size[-1][i]}"
         }]
-        pprint(a)
+        jsFile.append(n_data)
+
 
         i += 1
 
+                        # Запись в json файл
+    write(jsFile, "data.json")
 
 
-
+                        # Запуск программы
 if __name__ == "__main__":
 
     token = ""  # Token приложения вк
